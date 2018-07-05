@@ -5,6 +5,7 @@
 import time
 import multiprocessing
 import threading
+import re
 
 
 def work(name, ti, f):
@@ -74,6 +75,14 @@ if __name__ == '__main__':
     # pt = Pt()
     #
     # pt.start()
-    sub('temp.txt')
-
+    # sub('temp.txt')
+    s = 'dasda+dad/dad123'
+    rsplit = re.compile('\+|/')
+    nre = re.compile('(\d+)')
+    n_res = re.search(nre, s)
+    print(n_res, n_res.group())
+    print('----', n_res.group(0))
+    print(s.find('dad2'))
+    n_list = re.split(rsplit, s)
+    print(n_list)
     print(time.time() - t0)

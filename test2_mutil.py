@@ -16,6 +16,8 @@ class TSkillTK:
     key_num = {}
     ent = ''
     _lock = threading.Lock()
+    key_filter = ['c++', 'tcp/ip']
+    rsplit = re.compile('\+|/')
 
     def __init__(self, fn='skill_1.txt'):
         self.filename = fn
@@ -97,7 +99,14 @@ class TSkillTK:
     def callback(self, kn):
         with self._lock:
             for k, v in kn.items():
-                self.key_num[k] = self.key_num.get(k, 0) + v
+                kf = k.strip()
+                if len(kf) <= 20:
+                    if kf in self.key_filter:
+                        self.key_num[k] = self.key_num.get(k, 0) + v
+                    else:
+                        key_list = re.split(self.rsplit, kf)
+                        for key in key_list:
+                            self.key_num[key] = self.key_num.get(key, 0) + v
 
     def submit(self, ent):
         self.ent = ent
@@ -115,17 +124,21 @@ class TSkillTK:
         soup = BeautifulSoup(res, 'html.parser', from_encoding='gbk')
         pages = soup.select_one(".dw_page .td")
 
-        print(pages.get_text()[1:4])
-        m = int(pages.get_text()[1:4]) / 30
-        print(m)
+        # print(pages.get_text()[1:4])
         urls = [k.get('href') for k in soup.select('div.el p.t1 a')]
         pool = multiprocessing.Pool(processes=multiprocessing.cpu_count()*2)
         for url in urls:
             pool.apply_async(self.page, args=(url, self.filename,), callback=self.callback)
 
         pg = 2
-        limit = int(pages.get_text()[1:4])
-        # limit = 100
+        # limit = int(pages.get_text()[1:4])
+        nre = re.compile('(\d+)')
+        nres = re.search(nre, pages.get_text())
+        if nres:
+            limit = int(nres.group())
+        else:
+            limit = 0
+            pg = 0
         for x in range(pg, limit, 1):
             pool.apply_async(self.ppage, args=(x, x + 1, self.filename,), callback=self.callback)
         pool.close()
@@ -141,10 +154,9 @@ class TSkillTK:
         row = 1
         col = 0
         for key in self.key_num:
-            if len(key) <= 20:
-                worksheet.write(row, col, key)
-                worksheet.write(row, col + 1, self.key_num[key])
-                row += 1
+            worksheet.write(row, col, key)
+            worksheet.write(row, col + 1, self.key_num[key])
+            row += 1
         test_need.close()
         print("success", time.time() - t1)
 
