@@ -1,5 +1,6 @@
 # nnhh
 > for study
+> [Github](https://github.com/houhre/nnhh)
 
 ### test2.py  test2_multi.py 
 > GUI of 搜素职位要求
