@@ -23,10 +23,11 @@ class Pt:
     def __init__(self):
         self.num = 16
 
-    def work(self, n, ti):
+    @staticmethod
+    def work(n, ti):
         if ti > 8:
             ti -= 8
-        # time.sleep(ti)
+        time.sleep(ti)
         print(n, '------>', ti)
 
     def start(self):
