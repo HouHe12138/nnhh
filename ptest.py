@@ -26,11 +26,11 @@ class Pt:
     def work(self, n, ti):
         if ti > 8:
             ti -= 8
-        time.sleep(ti)
+        # time.sleep(ti)
         print(n, '------>', ti)
 
     def start(self):
-        # multiprocessing.freeze_support()
+
         pool = multiprocessing.Pool(processes=8)
 
         for i in range(self.num):
@@ -72,17 +72,18 @@ if __name__ == '__main__':
     # for t in tp:
     #     t.start()
     #     t.join()
-    # pt = Pt()
-    #
-    # pt.start()
+    pt = Pt()
+
+    pt.start()
     # sub('temp.txt')
-    s = 'dasda+dad/dad123'
-    rsplit = re.compile('\+|/')
-    nre = re.compile('(\d+)')
-    n_res = re.search(nre, s)
-    print(n_res, n_res.group())
-    print('----', n_res.group(0))
-    print(s.find('dad2'))
-    n_list = re.split(rsplit, s)
-    print(n_list)
+
+    # s = 'dasda+dad/dad123'
+    # rsplit = re.compile('\+|/')
+    # nre = re.compile('(\d+)')
+    # n_res = re.search(nre, s)
+    # print(n_res, n_res.group())
+    # print('----', n_res.group(0))
+    # print(s.find('dad2'))
+    # n_list = re.split(rsplit, s)
+    # print(n_list)
     print(time.time() - t0)
