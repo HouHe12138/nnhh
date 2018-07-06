@@ -18,7 +18,8 @@ class Reg(Frame):
     key_num = {}
     filename = 'skill.txt'
 
-    def __init__(self, master):
+    def __init__(self, master, **kw):
+        super().__init__(master, **kw)
         frame = Frame(master)
         frame.pack()
         self.lab1 = Label(frame, text="职位:")

@@ -164,17 +164,18 @@ class TSkillTK:
 class Reg(Frame):
     tstk = TSkillTK()
 
-    def __init__(self, master):
+    def __init__(self, master, **kw):
+        super().__init__(master, **kw)
         frame = Frame(master)
         frame.pack()
         self.lab1 = Label(frame, text="职位:")
         self.lab1.grid(row=2, column=1, sticky=W)
         self.ent1 = Entry(frame)
         self.ent1.grid(row=2, column=3, sticky=W)
-        self.button = Button(frame, text="查询", command=self.Submit)
+        self.button = Button(frame, text="查询", command=self.submit)
         self.button.grid(row=4, column=3, sticky=E)
 
-    def Submit(self):
+    def submit(self):
 
         self.button.configure(**{'state': DISABLED})
         ent = self.ent1.get()
